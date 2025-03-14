@@ -65,30 +65,31 @@ export default function PaymentHistory() {
 
             {/* Bottom Navigation */}
             <View style={styles.bottomNav}>
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
-                    <FontAwesome5 name="user" size={24} color="black" />
-                    <Text style={styles.navText}>Profile</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Home')}>
-                    <Ionicons name="home-outline" size={24} color="black" />
-                    <Text style={styles.navText}>Home</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.chatButton} onPress={() => router.push('/screens/Chat')}>
-                    <Ionicons name="chatbubble-ellipses-outline" size={30} color="white" />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
-                    <Ionicons name="settings-outline" size={24} color="black" />
-                    <Text style={styles.navText}>Settings</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/HelpSupport')}>
-                    <MaterialIcons name="support-agent" size={24} color="black" />
-                    <Text style={styles.navText}>Help/Support</Text>
-                </TouchableOpacity>
-            </View>
+                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
+                                <FontAwesome5 name="user" size={24} color="black" />
+                                <Text style={styles.navText}>Profile</Text>
+                            </TouchableOpacity>
+            
+                            <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/Notifications')}>
+                                <Ionicons name="notifications-outline" size={24} color="white" />
+                                <Text style={styles.navText}>Notifications</Text>
+                            </TouchableOpacity>
+            
+                            {/* Home Button */}
+                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/home')}>
+                                <Ionicons name="home" size={30} color="black" />
+                            </TouchableOpacity>
+            
+                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
+                                <Ionicons name="settings-outline" size={24} color="black" />
+                                <Text style={styles.navText}>Settings</Text>
+                            </TouchableOpacity>
+            
+                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/HelpSupport')}>
+                                <MaterialIcons name="support-agent" size={24} color="black" />
+                                <Text style={styles.navText}>Help/Support</Text>
+                            </TouchableOpacity>
+                        </View>
         </View>
     );
 }
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
         marginTop: 3,
         color: '#333',
     },
-    chatButton: {
+    homeButton: {
         width: 60,
         height: 60,
         borderRadius: 30,
