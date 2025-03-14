@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     },
     halfCircle: {
       
+        
     },
     title: {
         fontSize: 28,

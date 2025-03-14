@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-export default function Home() {
+export default function LicenseDetails() {
     const router = useRouter();
 
     return (
@@ -12,23 +12,31 @@ export default function Home() {
             <View style={styles.halfCircle}>
                 <Text style={styles.logoText}>
                     <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
-                  
                 </Text>
             </View>
 
-            {/* Buttons */}
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={() => router.push('/screens/outstanding')}>
-                    <Text style={styles.buttonText}>Outstanding Fines</Text>
-                </TouchableOpacity>
+            {/* Title */}
+            <Text style={styles.title}>Licen Details</Text>
 
-                <TouchableOpacity style={styles.button} onPress={() => router.push('/screens/licenDetails')}>
-                    <Text style={styles.buttonText}>Licen Details</Text>
-                </TouchableOpacity>
+            {/* License Information */}
+            <View style={styles.infoCard}>
+                <Text style={styles.infoText}><Text style={styles.bold}>Name:</Text> K A Kankanige</Text>
+                <Text style={styles.infoText}><Text style={styles.bold}>License Number:</Text> B268956</Text>
+                <Text style={styles.infoText}><Text style={styles.bold}>NIC Number:</Text> 200265411633</Text>
+                <Text style={styles.infoText}><Text style={styles.bold}>Address:</Text> No 47, Pitipana, Homagama</Text>
+            </View>
 
-                <TouchableOpacity style={styles.button} onPress={() => router.push('/screens/PaymentHistory')}>
-                    <Text style={styles.buttonText}>Payment History</Text>
-                </TouchableOpacity>
+            {/* Status and Violations */}
+            <View style={styles.statusContainer}>
+                <View style={styles.statusCard}>
+                    <Text style={styles.statusTitle}>Licen Status</Text>
+                    <Text style={styles.activeStatus}>Active</Text>
+                </View>
+
+                <View style={styles.statusCard}>
+                    <Text style={styles.statusTitle}>Totala Violation</Text>
+                    <Text style={styles.violationNumber}>5</Text>
+                </View>
             </View>
 
             {/* Bottom Navigation */}
@@ -44,7 +52,7 @@ export default function Home() {
                 </TouchableOpacity>
 
                 {/* Home Button */}
-                <TouchableOpacity style={styles.homeButton}>
+                <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/Home')}>
                     <Ionicons name="home" size={30} color="white" />
                 </TouchableOpacity>
 
@@ -86,21 +94,62 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
     },
-    buttonContainer: {
-        marginTop: 150,
+    title: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        marginTop: 14,
+        marginBottom: 20,
+    },
+    infoCard: {
+        backgroundColor: '#fff',
+        padding: 25,
+        borderRadius: 10,
+        width: '90%',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
+        marginBottom: 20,
+    },
+    infoText: {
+        fontSize: 16,
+        marginVertical: 3,
+    },
+    bold: {
+        fontWeight: 'bold',
+    },
+    statusContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         width: '90%',
     },
-    button: {
-        backgroundColor: '#E0E0E0',
+    statusCard: {
+        backgroundColor: '#fff',
         padding: 15,
-        borderRadius: 10,
-        marginVertical: 10,
+        borderRadius: 20,
+        width: '45%',
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
     },
-    buttonText: {
-        fontSize: 18,
+    statusTitle: {
+        fontSize: 16,
         fontWeight: 'bold',
-        color: '#333',
+        marginBottom: 5,
+    },
+    activeStatus: {
+        fontSize: 16,
+        color: 'green',
+        fontWeight: 'bold',
+    },
+    violationNumber: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: 'red',
     },
     bottomNav: {
         position: 'absolute',
@@ -132,4 +181,3 @@ const styles = StyleSheet.create({
         marginTop: -30, // Lift it up
     },
 });
-
