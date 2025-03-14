@@ -1,0 +1,158 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+export default function OutstandingFines() {
+    const router = useRouter();
+    const [form, setForm] = useState({
+        offenceID: '',
+        vehicleNo: '',
+        dlID: '',
+        identityNumber: ''
+    });
+
+    return (
+        <View style={styles.container}>
+            {/* Half-Circle Header with Logo */}
+            <View style={styles.halfCircle}>
+                <Text style={styles.logoText}>
+                    <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
+                </Text>
+            </View>
+
+            {/* Title */}
+            <Text style={styles.title}>Outstanding Fines</Text>
+
+            {/* Input Fields */}
+            <View style={styles.form}>
+                {["Offence ID", "Vehicle No", "D.L ID", "Identity number"].map((placeholder, index) => (
+                    <TextInput
+                        key={index}
+                        style={styles.input}
+                        placeholder={placeholder}
+                        onChangeText={(text) => setForm({ ...form, [placeholder.toLowerCase().replace(/ /g, '')]: text })}
+                    />
+                ))}
+
+                {/* Pay Button */}
+                <TouchableOpacity style={styles.payButton} onPress={() => alert('Payment Process Started!')}>
+                    <Text style={styles.payButtonText}>Pay</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* Bottom Navigation */}
+            <View style={styles.bottomNav}>
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
+                    <FontAwesome5 name="user" size={24} color="black" />
+                    <Text style={styles.navText}>Profile</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Notifications')}>
+                    <Ionicons name="notifications-outline" size={24} color="black" />
+                    <Text style={styles.navText}>Notifications</Text>
+                </TouchableOpacity>
+
+                {/* Home Button */}
+                <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/Home')}>
+                    <Ionicons name="home" size={30} color="white" />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
+                    <Ionicons name="settings-outline" size={24} color="black" />
+                    <Text style={styles.navText}>Settings</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/HelpSupport')}>
+                    <MaterialIcons name="support-agent" size={24} color="black" />
+                    <Text style={styles.navText}>Help/Support</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#F5F5F5',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom: 80, // Space for bottom nav
+    },
+    halfCircle: {
+        width: '100%',
+        height: 250, 
+        backgroundColor: '#D3D3D3', 
+        borderBottomLeftRadius: 300,
+        borderBottomRightRadius: 300,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0
+    },
+    logoText: {
+        fontSize: 35,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginTop: 140,
+        marginBottom: 20,
+    },
+    form: {
+        width: '90%',
+    },
+    input: {
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        padding: 15,
+        marginVertical: 8,
+        borderWidth: 1,
+        borderColor: '#ddd'
+    },
+    payButton: {
+        backgroundColor: '#0A0A50',
+        padding: 15,
+        borderRadius: 10,
+        marginTop: 20,
+        alignItems: 'center'
+    },
+    payButtonText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+    bottomNav: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderColor: '#ccc',
+    },
+    navItem: {
+        alignItems: 'center',
+    },
+    navText: {
+        fontSize: 12,
+        marginTop: 3,
+        color: '#333',
+    },
+    homeButton: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#0A66C2',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -30, // Lift it up
+    },
+});
+
