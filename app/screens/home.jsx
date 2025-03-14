@@ -26,7 +26,7 @@ export default function Home() {
                     <Text style={styles.buttonText}>Licen Details</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => router.push('/screens/PaymentHistory')}>
+                <TouchableOpacity style={styles.button} onPress={() => router.push('/screens/paymentHistory')}>
                     <Text style={styles.buttonText}>Payment History</Text>
                 </TouchableOpacity>
             </View>

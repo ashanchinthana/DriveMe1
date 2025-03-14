@@ -1,0 +1,212 @@
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import { useRouter } from 'expo-router';
+import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+export default function PaymentHistory() {
+    const router = useRouter();
+
+    const transactions = [
+        {
+            id: '1',
+            title: 'fine payment',
+            transactionId: '000085752257',
+            amount: 'RS 3000.00',
+            date: '16 Oct 2024',
+            time: '11:30 AM',
+            status: 'confirmed',
+            
+        },
+        {
+            id: '2',
+            title: 'fine payment',
+            transactionId: '000085752257',
+            amount: 'RS 3000.00',
+            date: '16 Oct 2024',
+            time: '11:30 AM',
+            status: 'confirmed',
+        }
+    ];
+
+    return (
+        <View style={styles.container}>
+            {/* Half-Circle Header with Logo */}
+            <View style={styles.halfCircle}>
+                <Text style={styles.logoText}>
+                    <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
+                </Text>
+            </View>
+
+            {/* Payment History List */}
+            <FlatList
+                data={transactions}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                    <View style={styles.card}>
+                        <Image source={require('../../assets/images/3.png')} style={styles.icon} />
+                        <View style={styles.cardContent}>
+                            <Text style={styles.title}>{item.title}</Text>
+                            <Text style={styles.transactionId}>Transaction ID</Text>
+                            <Text style={styles.idValue}>{item.transactionId}</Text>
+                            <View style={styles.footer}>
+                                <Text style={styles.dateTime}>{item.date}  {item.time}</Text>
+                                <View style={styles.statusContainer}>
+                                    <Text style={styles.statusText}>{item.status}</Text>
+                                </View>
+                                <Text style={styles.amount}>{item.amount}</Text>
+                            </View>
+                        </View>
+                    </View>
+                )}
+            /> 
+
+            {/* Bottom Navigation */}
+            <View style={styles.bottomNav}>
+                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
+                                <FontAwesome5 name="user" size={24} color="black" />
+                                <Text style={styles.navText}>Profile</Text>
+                            </TouchableOpacity>
+            
+                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Notifications')}>
+                                <Ionicons name="notifications-outline" size={24} color="black" />
+                                <Text style={styles.navText}>Notifications</Text>
+                            </TouchableOpacity>
+
+                {/* Chat Button */}
+                <TouchableOpacity style={styles.chatButton} onPress={() => router.push('/screens/Chat')}>
+                    <Ionicons name="notifications-outline" size={30} color="white" />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
+                    <Ionicons name="settings-outline" size={24} color="black" />
+                    <Text style={styles.navText}>Settings</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/HelpSupport')}>
+                    <MaterialIcons name="support-agent" size={24} color="black" />
+                    <Text style={styles.navText}>Help/Support</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#F5F5F5',
+        paddingBottom: 80, // Space for bottom nav
+    },
+    halfCircle: {
+        width: '100%',
+        height: 250, 
+        backgroundColor: '#D3D3D3', 
+        borderBottomLeftRadius: 300,
+        borderBottomRightRadius: 300,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0
+    },
+    logoText: {
+        fontSize: 35,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    card: {
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        padding: 15,
+        marginHorizontal: 15,
+        marginTop: 20,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 3,
+        alignItems: 'center',
+    },
+    icon: {
+        width: 40,
+        height: 40,
+        marginRight: 10,
+    },
+    cardContent: {
+        flex: 1,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    transactionId: {
+        fontSize: 14,
+        color: '#555',
+    },
+    idValue: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    dateTime: {
+        fontSize: 12,
+        color: '#666',
+    },
+    statusContainer: {
+        backgroundColor: '#DFF6DD',
+        paddingHorizontal: 10,
+        paddingVertical: 3,
+        borderRadius: 60,
+       
+        
+        
+    },
+    statusText: {
+        fontSize: 12,
+        color: 'green',
+        fontWeight: 'bold',
+        marginTop: 1,
+        bottom: 30,
+    },
+    amount: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000',
+        bottom: 30,
+    },
+    bottomNav: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderColor: '#ccc',
+    },
+    navItem: {
+        alignItems: 'center',
+    },
+    navText: {
+        fontSize: 12,
+        marginTop: 3,
+        color: '#333',
+    },
+    chatButton: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#0A66C2',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -30, // Lift it up
+    },
+});

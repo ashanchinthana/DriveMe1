@@ -52,7 +52,7 @@ export default function LicenseDetails() {
                 </TouchableOpacity>
 
                 {/* Home Button */}
-                <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/Home')}>
+                <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/home')}>
                     <Ionicons name="home" size={30} color="white" />
                 </TouchableOpacity>
 
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     statusCard: {
         backgroundColor: '#fff',
-        padding: 15,
+        padding: 55,
         borderRadius: 20,
         width: '45%',
         alignItems: 'center',
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
+        
     },
     activeStatus: {
         fontSize: 16,
@@ -147,9 +148,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     violationNumber: {
-        fontSize: 22,
+        fontSize: 50,
         fontWeight: 'bold',
         color: 'red',
+        
     },
     bottomNav: {
         position: 'absolute',

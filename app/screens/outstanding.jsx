@@ -54,7 +54,7 @@ export default function OutstandingFines() {
                 </TouchableOpacity>
 
                 {/* Home Button */}
-                <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/Home')}>
+                <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/home')}>
                     <Ionicons name="home" size={30} color="white" />
                 </TouchableOpacity>
 
