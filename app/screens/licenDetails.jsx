@@ -98,19 +98,19 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: 'bold',
         marginTop: 14,
-        marginBottom: 20,
+        marginBottom: 60,
     },
     infoCard: {
         backgroundColor: '#fff',
         padding: 25,
         borderRadius: 10,
-        width: '90%',
+        width: '90%',marginBottom: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 3,
-        marginBottom: 20,
+        
     },
     infoText: {
         fontSize: 16,
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '90%',
+        marginBottom: -200,
     },
     statusCard: {
         backgroundColor: '#fff',

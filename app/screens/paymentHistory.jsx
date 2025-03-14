@@ -15,12 +15,11 @@ export default function PaymentHistory() {
             date: '16 Oct 2024',
             time: '11:30 AM',
             status: 'confirmed',
-            
         },
         {
             id: '2',
             title: 'fine payment',
-            transactionId: '000085752257',
+            transactionId: '000085752258',
             amount: 'RS 3000.00',
             date: '16 Oct 2024',
             time: '11:30 AM',
@@ -41,15 +40,19 @@ export default function PaymentHistory() {
             <FlatList
                 data={transactions}
                 keyExtractor={(item) => item.id}
+                contentContainerStyle={{ paddingTop: 300, paddingBottom: 100 }}
                 renderItem={({ item }) => (
                     <View style={styles.card}>
-                        <Image source={require('../../assets/images/3.png')} style={styles.icon} />
+                        <Image
+                            source={require('../../assets/images/3.png')}
+                            style={styles.icon}
+                        />
                         <View style={styles.cardContent}>
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.transactionId}>Transaction ID</Text>
                             <Text style={styles.idValue}>{item.transactionId}</Text>
                             <View style={styles.footer}>
-                                <Text style={styles.dateTime}>{item.date}  {item.time}</Text>
+                                <Text style={styles.dateTime}>{item.date} {item.time}</Text>
                                 <View style={styles.statusContainer}>
                                     <Text style={styles.statusText}>{item.status}</Text>
                                 </View>
@@ -58,23 +61,22 @@ export default function PaymentHistory() {
                         </View>
                     </View>
                 )}
-            /> 
+            />
 
             {/* Bottom Navigation */}
             <View style={styles.bottomNav}>
-                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
-                                <FontAwesome5 name="user" size={24} color="black" />
-                                <Text style={styles.navText}>Profile</Text>
-                            </TouchableOpacity>
-            
-                            <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Notifications')}>
-                                <Ionicons name="notifications-outline" size={24} color="black" />
-                                <Text style={styles.navText}>Notifications</Text>
-                            </TouchableOpacity>
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
+                    <FontAwesome5 name="user" size={24} color="black" />
+                    <Text style={styles.navText}>Profile</Text>
+                </TouchableOpacity>
 
-                {/* Chat Button */}
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Home')}>
+                    <Ionicons name="home-outline" size={24} color="black" />
+                    <Text style={styles.navText}>Home</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity style={styles.chatButton} onPress={() => router.push('/screens/Chat')}>
-                    <Ionicons name="notifications-outline" size={30} color="white" />
+                    <Ionicons name="chatbubble-ellipses-outline" size={30} color="white" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
@@ -95,7 +97,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F5F5F5',
-        paddingBottom: 80, // Space for bottom nav
     },
     halfCircle: {
         width: '100%',
@@ -136,8 +137,9 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
+        
     },
     transactionId: {
         fontSize: 14,
@@ -160,25 +162,24 @@ const styles = StyleSheet.create({
     },
     statusContainer: {
         backgroundColor: '#DFF6DD',
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         paddingVertical: 3,
-        borderRadius: 60,
-       
-        
+        borderRadius: 5,
+        marginBottom: 75,
         
     },
     statusText: {
         fontSize: 12,
         color: 'green',
         fontWeight: 'bold',
-        marginTop: 1,
-        bottom: 30,
+        
     },
     amount: {
         fontSize: 16,
         fontWeight: 'bold',
         color: '#000',
-        bottom: 30,
+        width: 100,
+        height: 100,
     },
     bottomNav: {
         position: 'absolute',
@@ -207,6 +208,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A66C2',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: -30, // Lift it up
+        marginTop: -30,
     },
 });
