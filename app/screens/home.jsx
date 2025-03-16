@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 150,
-        width: '90%',
+        width: '80%',
     },
     button: {
         backgroundColor: '#E0E0E0',
-        padding: 15,
+        padding: 35,
         borderRadius: 10,
         marginVertical: 10,
         alignItems: 'center',

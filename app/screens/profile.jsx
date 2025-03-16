@@ -14,12 +14,12 @@ export default function ProfileScreen() {
     {
       title: 'My Profile',
       icon: <Ionicons name="person-outline" size={24} color="black" />, 
-      onPress: () => router.push('/screens/my-profile')
+      onPress: () => router.push('/screens/profile1My')
     },
     {
       title: 'Setting',
       icon: <Ionicons name="settings-outline" size={24} color="black" />, 
-      onPress: () => router.push('/screens/settings')
+      onPress: () => router.push('/screens/profile2Setting')
     },
     {
       title: 'Log Out',
@@ -34,13 +34,15 @@ export default function ProfileScreen() {
     <SafeAreaView style={styles.container}>
       {/* Half Circle Header */}
       <View style={styles.halfCircle}>
+
         {/* Back Button */}
         <TouchableOpacity 
           style={styles.backButton} 
-          onPress={() => router.back()}
-        >
+          onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
+
+
         <Text style={styles.logoText}>
           <Text style={{ color: '#1E88E5', fontWeight: 'bold' }}>D</Text>
           <Text style={{ color: '#333', fontWeight: 'bold' }}>uthaya</Text>
