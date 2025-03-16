@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
     halfCircle: {
         width: '100%',
-        height: 180, 
+        height: 250, 
         backgroundColor: '#D3D3D3', 
         borderBottomLeftRadius: 300,
         borderBottomRightRadius: 300,

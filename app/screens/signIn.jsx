@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SignUp() {
     const router = useRouter();
@@ -17,13 +18,21 @@ export default function SignUp() {
         <View style={styles.container}>
             {/* Half-Circle Header */}
             <View style={styles.halfCircle}>
+                {/* Back Button */}
+                <TouchableOpacity 
+                    style={styles.backButton} 
+                    onPress={() => router.push('/')}
+                >
+                    <Ionicons name="arrow-back" size={24} color="#333" />
+                </TouchableOpacity>
+                
                 <Text style={styles.title}>Welcome Back</Text>
                 <Text style={styles.subtitle}>Login to your account</Text>
             </View>
 
             {/* Input Fields */}
             <View style={styles.form}>
-                {[ "ID Number",  "Password"].map((placeholder, index) => (
+                {[ "ID Number", "Password"].map((placeholder, index) => (
                     <TextInput 
                         key={index}
                         style={styles.input}
@@ -35,19 +44,17 @@ export default function SignUp() {
 
                 {/* Create Account Button */}
                 <TouchableOpacity 
-                    style={styles.createButton} 
+                    style={styles.createButton}
                     onPress={() => router.push('/screens/home')}
                 >
                     <Text style={styles.createButtonText}>Login Account</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push('/screens/already')}>
-                                    <Text style={styles.footerText}>
-                                        <Text style={styles.text}>Don't have an account ? </Text>
-                                        <Text style={styles.link}>Creat new account </Text>
-                                    </Text>
-                                </TouchableOpacity>
-
-                
+                    <Text style={styles.footerText}>
+                        <Text style={styles.text}>Don't have an account ? </Text>
+                        <Text style={styles.link}>Creat new account </Text>
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -72,10 +79,21 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0
     },
+    backButton: {
+        position: 'absolute',
+        top: 40,
+        left: 20,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+    },
     title: {
         fontSize: 38,
         fontWeight: 'bold'
-        
     },
     subtitle: {
         fontSize: 16,
@@ -118,6 +136,21 @@ const styles = StyleSheet.create({
     text: {
         color: '#0A66C2',
         fontWeight: 'bold',
-    }
-
+    },
+    backButton: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,}
 });

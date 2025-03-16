@@ -10,6 +10,13 @@ export default function PaymentScreen() {
         <View style={styles.container}>
             {/* Header with Logo */}
             <View style={styles.halfCircle}>
+                  {/* Back Button */}
+                                                <TouchableOpacity 
+                                                    style={styles.backButton} 
+                                                    onPress={() => router.back()}
+                                                >
+                                                    <Ionicons name="arrow-back" size={24} color="#333" />
+                                                </TouchableOpacity>
                 <Text style={styles.logoText}>
                     <Text style={{ color: "#0A66C2", fontSize: 40 }}>D</Text>uthaya
                 </Text>
@@ -82,7 +89,7 @@ const styles = StyleSheet.create({
     },
     halfCircle: {
         width: "100%",
-        height: 180,
+        height: 250,
         backgroundColor: "#D3D3D3",
         borderBottomLeftRadius: 300,
         borderBottomRightRadius: 300,
@@ -90,6 +97,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         position: "absolute",
         top: 0,
+
+      
     },
     logoText: {
         fontSize: 35,
@@ -99,7 +108,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         fontWeight: "bold",
-        marginTop: 200,
+        marginTop: 250,
     },
     paymentText: {
         fontSize: 16,
@@ -179,4 +188,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: -30,
     },
+    backButton: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,}
 });

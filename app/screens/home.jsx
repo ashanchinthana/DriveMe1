@@ -17,6 +17,7 @@ export default function Home() {
                                                 <Ionicons name="arrow-back" size={24} color="#333" />
                                             </TouchableOpacity>
             <View style={styles.halfCircle}>
+                
                 <Text style={styles.logoText}>
                     <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
                   
@@ -154,5 +155,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,}
+        
 });
 
