@@ -44,7 +44,7 @@ export default function OutstandingFines() {
                 ))}
 
                 {/* Pay Button */}
-                <TouchableOpacity style={styles.payButton} onPress={() => alert('Payment Process Started!')}>
+                <TouchableOpacity style={styles.payButton} onPress={() => router.push('/screens/outstanding1')}>
                     <Text style={styles.payButtonText}>Pay</Text>
                 </TouchableOpacity>
             </View>
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 50,
-        left: 20,
+        top: 10,
+        left: 10,
         width: 40,
         height: 40,
         borderRadius: 20,

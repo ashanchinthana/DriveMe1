@@ -34,7 +34,7 @@ export default function PaymentHistory() {
                 {/* Back Button */}
                                 <TouchableOpacity 
                                     style={styles.backButton} 
-                                    onPress={() => router.back()}
+                                    onPress={() => router.push('/screens/home')}
                                 >
                                     <Ionicons name="arrow-back" size={24} color="#333" />
                                 </TouchableOpacity>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
     halfCircle: {
         width: '100%',
-        height: 250, 
+        height: 180, 
         backgroundColor: '#D3D3D3', 
         borderBottomLeftRadius: 300,
         borderBottomRightRadius: 300,
@@ -220,8 +220,8 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 50,
-        left: 20,
+        top: 10,
+        left: 10,
         width: 40,
         height: 40,
         borderRadius: 20,

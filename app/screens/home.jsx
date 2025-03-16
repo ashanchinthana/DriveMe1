@@ -9,6 +9,13 @@ export default function Home() {
     return (
         <View style={styles.container}>
             {/* Half-Circle Header with Logo */}
+            {/* Back Button */}
+                                            <TouchableOpacity 
+                                                style={styles.backButton} 
+                                                onPress={() => router.push('/screens/signIn')}
+                                            >
+                                                <Ionicons name="arrow-back" size={24} color="#333" />
+                                            </TouchableOpacity>
             <View style={styles.halfCircle}>
                 <Text style={styles.logoText}>
                     <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
@@ -131,5 +138,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: -30, // Lift it up
     },
+    backButton: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,}
 });
 

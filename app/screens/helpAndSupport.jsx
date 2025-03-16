@@ -10,6 +10,13 @@ export default function HomeScreen() {
         <View style={styles.container}>
             {/* Half-Circle Header with Logo */}
             <View style={styles.halfCircle}>
+                {/* Back Button */}
+                                <TouchableOpacity 
+                                    style={styles.backButton} 
+                                    onPress={() => router.back()}
+                                >
+                                    <Ionicons name="arrow-back" size={24} color="#333" />
+                                </TouchableOpacity>
                 <Text style={styles.logoText}>
                     <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
                 </Text>
@@ -141,4 +148,20 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         elevation: 10,
     },
+    backButton: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,}
 });

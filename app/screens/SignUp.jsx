@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function SignUp() {
@@ -14,15 +14,18 @@ export default function SignUp() {
     });
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Half-Circle Header */}
-            <View style={styles.halfCircle}>
-                <Text style={styles.title}>Register</Text>
-                <Text style={styles.subtitle}>Create your new account</Text>
+            <View style={styles.headerContainer}>
+                <View style={styles.halfCircle} />
+                <View style={styles.headerTextContainer}>
+                    <Text style={styles.title}>Register</Text>
+                    <Text style={styles.subtitle}>Create your new account</Text>
+                </View>
             </View>
 
-            {/* Input Fields */}
-            <View style={styles.form}>
+            {/* Form Section */}
+            <ScrollView contentContainerStyle={styles.form}>
                 {["Name", "ID Number", "Phone", "Postal Code", "E-mail", "Password"].map((placeholder, index) => (
                     <TextInput 
                         key={index}
@@ -44,11 +47,11 @@ export default function SignUp() {
                 {/* Already have an account */}
                 <TouchableOpacity onPress={() => router.push('/screens/signIn')}>
                     <Text style={styles.footerText}>
-                        <Text style={styles.link}>Already have an account ?</Text>
+                        <Text style={styles.link}>Already have an account?</Text>
                     </Text>
                 </TouchableOpacity>
-            </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
@@ -56,24 +59,31 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F5F5F5',
+    },
+    headerContainer: {
+        position: 'relative',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20
     },
     halfCircle: {
-        width: '109%',
+        width: '200%',
         height: 250, 
         backgroundColor: '#D3D3D3', 
         borderBottomLeftRadius: 300,
         borderBottomRightRadius: 300,
-        alignItems: 'center',
-        justifyContent: 'center',
         position: 'absolute',
-        top: 0
+        top: -100,
+        zIndex: 0
+    },
+    headerTextContainer: {
+        paddingTop: 100,
+        paddingBottom: 50,
+        alignItems: 'center',
+        zIndex: 1
     },
     title: {
         fontSize: 28,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#333'
     },
     subtitle: {
         fontSize: 16,
@@ -81,8 +91,8 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     form: {
-        width: '100%',
-        marginTop: 150 // Adjusted to place form below the half-circle
+        paddingHorizontal: 20,
+        paddingBottom: 20,
     },
     input: {
         backgroundColor: '#FFF',
@@ -100,7 +110,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     createButtonText: {
-        color: '#FFF',
+        color: '#0A66C2',
         fontWeight: 'bold',
         fontSize: 16
     },

@@ -23,7 +23,7 @@ export default function SignUp() {
 
             {/* Input Fields */}
             <View style={styles.form}>
-                {[ "ID Number",  "E-mail", "Password"].map((placeholder, index) => (
+                {[ "ID Number",  "Password"].map((placeholder, index) => (
                     <TextInput 
                         key={index}
                         style={styles.input}
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 38,
         fontWeight: 'bold'
+        
     },
     subtitle: {
         fontSize: 16,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
         padding: 15,
         marginVertical: 8,
         borderWidth: 1,
-        borderColor: '#ddd'
+        borderColor: '#0A66C2'
     },
     createButton: {
         backgroundColor: '#0A0A50',
@@ -115,8 +116,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     text: {
-        color: '#000000',
-        fontWeight: 'bold'
+        color: '#0A66C2',
+        fontWeight: 'bold',
     }
 
 });
