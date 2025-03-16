@@ -41,12 +41,12 @@ export default function Home() {
 
             {/* Bottom Navigation */}
             <View style={styles.bottomNav}>
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/profile')}>
                     <FontAwesome5 name="user" size={24} color="black" />
                     <Text style={styles.navText}>Profile</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Notifications')}>
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/notification')}>
                     <Ionicons name="notifications-outline" size={24} color="black" />
                     <Text style={styles.navText}>Notifications</Text>
                 </TouchableOpacity>
