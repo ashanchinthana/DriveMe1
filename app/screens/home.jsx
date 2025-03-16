@@ -46,7 +46,7 @@ export default function Home() {
                     <Text style={styles.navText}>Profile</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/notification')}>
+                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/paymentHistory')}>
                     <Ionicons name="notifications-outline" size={24} color="black" />
                     <Text style={styles.navText}>Notifications</Text>
                 </TouchableOpacity>

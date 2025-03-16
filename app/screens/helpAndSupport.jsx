@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F5F5F5',
         alignItems: 'center',
-        paddingBottom: 80, // Space for bottom nav
+        paddingBottom: 80,
     },
     halfCircle: {
         width: '100%',
@@ -91,23 +91,18 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     buttonContainer: {
-        marginTop: 400,
+        marginTop: 300,
         width: '100%',
         alignItems: 'center',
-        
     },
     mainButton: {
-        width: '80%',
-        backgroundColor: '#D3D3D3',
-        paddingVertical: 50,
-        borderRadius: 12,
-        marginBottom: 80,
+        backgroundColor: '#E5E5E5',
+        borderRadius: 150,
+        padding: 46,
+        marginBottom: 35,
+        width: '80%', // or '100%' if you want edge-to-edge buttons like in settings.jsx
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowOffset: { width: 0, height: 4 },
-        shadowRadius: 5,
-        elevation: 3,
+        justifyContent: 'center',
     },
     buttonText: {
         fontSize: 25,
@@ -141,7 +136,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0A66C2',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: -30, // Lift it up
+        marginTop: -30,
         shadowColor: '#0A66C2',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.3,
@@ -163,5 +158,6 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
-        shadowRadius: 4,}
+        shadowRadius: 4,
+    },
 });
