@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
@@ -13,9 +13,17 @@ export default function OutstandingFines() {
     });
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Half-Circle Header with Logo */}
             <View style={styles.halfCircle}>
+                {/* Back Button */}
+                <TouchableOpacity 
+                    style={styles.backButton} 
+                    onPress={() => router.back()}
+                >
+                    <Ionicons name="arrow-back" size={24} color="#333" />
+                </TouchableOpacity>
+                
                 <Text style={styles.logoText}>
                     <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
                 </Text>
@@ -68,7 +76,7 @@ export default function OutstandingFines() {
                     <Text style={styles.navText}>Help/Support</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -90,6 +98,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         top: 0
+    },
+    backButton: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
     },
     logoText: {
         fontSize: 35,
@@ -155,4 +180,3 @@ const styles = StyleSheet.create({
         marginTop: -30, // Lift it up
     },
 });
-

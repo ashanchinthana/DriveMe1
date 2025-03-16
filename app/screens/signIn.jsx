@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     halfCircle: {
-        width: '100%',
+        width: '109%',
         height: 250, 
         backgroundColor: '#D3D3D3', 
         borderBottomLeftRadius: 300,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         top: 0
     },
     title: {
-        fontSize: 28,
+        fontSize: 38,
         fontWeight: 'bold'
     },
     subtitle: {
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     text: {
-        color: '#666',
+        color: '#000000',
         fontWeight: 'bold'
     }
 

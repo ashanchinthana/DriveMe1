@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     halfCircle: {
-        width: '100%',
+        width: '109%',
         height: 250, 
         backgroundColor: '#D3D3D3', 
         borderBottomLeftRadius: 300,
