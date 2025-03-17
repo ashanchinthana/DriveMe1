@@ -122,9 +122,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: '#1E88E5',
   },
-  logoContainer: {
+  
  
-   
+  changeButton: {
+        backgroundColor: '#0A235C', // Dark blue button
+        borderRadius: 5,
+        padding: 15,
+        alignItems: 'center',
+        marginTop: 20,
+  },
+  changeButtonText: { 
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
    
   
    

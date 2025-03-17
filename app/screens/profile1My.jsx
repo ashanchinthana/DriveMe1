@@ -6,7 +6,8 @@ import {
   TouchableOpacity, 
   StyleSheet, 
   SafeAreaView, 
-  Image 
+  Image,
+  ScrollView
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -26,97 +27,101 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Half-Circle Header with Logo */}
+      {/* Back Button - keep outside ScrollView for fixed position */}
+      <TouchableOpacity 
+        style={styles.backButton} 
+        onPress={() => router.back()}>
+        <Ionicons name="arrow-back" size={24} color="#333" />
+      </TouchableOpacity>
 
-      {/* Back Button */}
-              <TouchableOpacity 
-                style={styles.backButton} 
-                onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} color="#333" />
-              </TouchableOpacity>
-
+      {/* Half-Circle Header with Logo - keep outside ScrollView for fixed position */}
       <View style={styles.halfCircle}>
         <Text style={styles.logoText}>
           <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
         </Text>
       </View>
 
-      {/* Profile Title */}
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Profile</Text>
-      </View>
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollViewContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Profile Title */}
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Profile</Text>
+        </View>
 
-      {/* Profile Information */}
-      <View style={styles.profileContainer}>
-        <View style={styles.userInfoContainer}>
-          <Image 
-            source={require('../../assets/images/5.png')} 
-            style={styles.profileImage}
-          />
-          <View style={styles.userDetails}>
-            <Text style={styles.userName}>{userData.name || 'Your name'}</Text>
-            <View style={styles.emailContainer}>
-              <Text style={styles.userEmail}>{userData.email || 'yourname@gmail.com'}</Text>
-              <TouchableOpacity onPress={clearEmail} style={styles.clearButton}>
-                <Text style={styles.clearButtonText}>✕</Text>
-              </TouchableOpacity>
+        {/* Profile Information */}
+        <View style={styles.profileContainer}>
+          <View style={styles.userInfoContainer}>
+            <Image 
+              source={require('../../assets/images/5.png')} 
+              style={styles.profileImage}
+            />
+            <View style={styles.userDetails}>
+              <Text style={styles.userName}>{userData.name || 'Your name'}</Text>
+              <View style={styles.emailContainer}>
+                <Text style={styles.userEmail}>{userData.email || 'yourname@gmail.com'}</Text>
+                <TouchableOpacity onPress={clearEmail} style={styles.clearButton}>
+                  <Text style={styles.clearButtonText}>✕</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+
+          <View style={styles.formContainer}>
+            <View style={styles.fieldContainer}>
+              <Text style={styles.fieldLabel}>Name</Text>
+              <TextInput
+                style={styles.fieldInput}
+                value={userData.name}
+                onChangeText={(text) => setUserData({...userData, name: text})}
+              />
+            </View>
+
+            <View style={styles.fieldContainer}>
+              <Text style={styles.fieldLabel}>Email</Text>
+              <TextInput
+                style={styles.fieldInput}
+                value={userData.email}
+                onChangeText={(text) => setUserData({...userData, email: text})}
+                keyboardType="email-address"
+              />
+            </View>
+
+            <View style={styles.fieldContainer}>
+              <Text style={styles.fieldLabel}>Mobile number</Text>
+              <TextInput
+                style={styles.fieldInput}
+                value={userData.mobile}
+                onChangeText={(text) => setUserData({...userData, mobile: text})}
+                keyboardType="phone-pad"
+              />
+            </View>
+
+            <View style={styles.fieldContainer}>
+              <Text style={styles.fieldLabel}>Location</Text>
+              <TextInput
+                style={styles.fieldInput}
+                value={userData.location}
+                onChangeText={(text) => setUserData({...userData, location: text})}
+              />
+            </View>
+
+            <TouchableOpacity 
+              style={styles.saveButton}
+              onPress={() => alert('Profile changes saved!')}
+            >
+              <Text style={styles.saveButtonText}>Save Changes</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={styles.formContainer}>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>Name</Text>
-            <TextInput
-              style={styles.fieldInput}
-              value={userData.name}
-              onChangeText={(text) => setUserData({...userData, name: text})}
-              placeholder="Enter your name"
-            />
-          </View>
+        {/* Add bottom padding to ensure content doesn't get hidden behind navigation bar */}
+        <View style={styles.bottomPadding} />
+      </ScrollView>
 
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>Email</Text>
-            <TextInput
-              style={styles.fieldInput}
-              value={userData.email}
-              onChangeText={(text) => setUserData({...userData, email: text})}
-              keyboardType="email-address"
-              placeholder="Enter your email"
-            />
-          </View>
-
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>Mobile number</Text>
-            <TextInput
-              style={styles.fieldInput}
-              value={userData.mobile}
-              onChangeText={(text) => setUserData({...userData, mobile: text})}
-              keyboardType="phone-pad"
-              placeholder="Enter your mobile number"
-            />
-          </View>
-
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>Location</Text>
-            <TextInput
-              style={styles.fieldInput}
-              value={userData.location}
-              onChangeText={(text) => setUserData({...userData, location: text})}
-              placeholder="Enter your location"
-            />
-          </View>
-
-          <TouchableOpacity 
-            style={styles.saveButton}
-            onPress={() => alert('Profile changes saved!')}
-          >
-            <Text style={styles.saveButtonText}>Save Changes</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Bottom Navigation Bar */}
+      {/* Bottom Navigation Bar - keep outside ScrollView for fixed position */}
       <View style={styles.bottomNav}>
         <TouchableOpacity style={[styles.navItem, styles.activeNavItem]}>
           <View style={styles.activeIconCircle}>
@@ -166,7 +171,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
+  scrollView: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    paddingTop: 250, // Start content below the header
+  },
   halfCircle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     width: '100%',
     height: 250, 
     backgroundColor: '#D3D3D3', 
@@ -174,6 +189,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 300,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1, // Ensure the half circle is below the back button
   },
   logoText: {
     fontSize: 35,
@@ -269,6 +285,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
+  bottomPadding: {
+    height: 80, // Add padding at the bottom to prevent content from being hidden by the nav bar
+  },
   bottomNav: {
     position: 'absolute',
     bottom: 0,
@@ -317,5 +336,6 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    shadowRadius: 4,}
+    shadowRadius: 4,
+  }
 });

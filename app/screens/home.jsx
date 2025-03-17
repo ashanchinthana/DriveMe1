@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image , } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image ,  ScrollView} from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
@@ -8,6 +8,8 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
+            
+            
             {/* Half-Circle Header with Logo */}
             {/* Back Button */}
                                             <TouchableOpacity 
@@ -26,6 +28,7 @@ export default function Home() {
 
             {/* Buttons */}
             <View style={styles.buttonContainer}>
+                
                 <TouchableOpacity style={styles.button} onPress={() => router.push('/screens/outstanding')}>
                     <Text style={styles.buttonText}>Outstanding Fines</Text>
                 </TouchableOpacity>
@@ -37,6 +40,7 @@ export default function Home() {
                 <TouchableOpacity style={styles.button} onPress={() => router.push('/screens/paymentHistory')}>
                     <Text style={styles.buttonText}>Payment History</Text>
                 </TouchableOpacity>
+                
             </View>
 
             {/* Bottom Navigation */}
@@ -66,6 +70,7 @@ export default function Home() {
                     <Text style={styles.navText}>Help/Support</Text>
                 </TouchableOpacity>
             </View>
+            
         </View>
     );
 }

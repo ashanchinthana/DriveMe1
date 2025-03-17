@@ -26,14 +26,14 @@ export default function SettingsScreen() {
             <View style={styles.settingsContainer}>
                 <TouchableOpacity 
                     style={styles.settingButton}
-                    onPress={() => router.push('/screens/PaymentSettings')}
+                    onPress={() => router.push('/screens/Settings1')}
                 >
                     <Text style={styles.settingButtonText}>Payment Settings</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                     style={styles.settingButton}
-                    onPress={() => router.push('/screens/ProfileSettings')}
+                    onPress={() => router.push('/screens/profile2Setting')}
                 >
                     <Text style={styles.settingButtonText}>Profile Settings</Text>
                 </TouchableOpacity>

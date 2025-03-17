@@ -14,7 +14,7 @@ export default function ProfileSettingsScreen() {
     },
     {
       title: 'Change Password',
-      onPress: () => router.push('/screens/change-password')
+      onPress: () => router.push('/screens/profile2Setting3')
     }
   ];
 
@@ -116,10 +116,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
+   
   },
   optionsContainer: {
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 100,
     alignItems: 'center',
   },
   optionButton: {
@@ -132,9 +133,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   optionText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: '500',
     color: '#333',
+    fontWeight: 'bold',
   },
   bottomNav: {
     position: 'absolute',

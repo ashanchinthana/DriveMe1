@@ -13,38 +13,34 @@ import {
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
-export default function ChangeMobileScreen() {
+export default function ChangePasswordScreen() {
   const router = useRouter();
-  const [password, setPassword] = useState('');
-  const [oldMobile, setOldMobile] = useState('');
-  const [newMobile, setNewMobile] = useState('');
-  const [confirmMobile, setConfirmMobile] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSendOTP = () => {
+  const handleChangePassword = () => {
     // Validate inputs
-    if (!password) {
-      alert('Please enter your password');
+    if (!currentPassword) {
+      alert('Please enter your current password');
       return;
     }
-    if (!oldMobile) {
-      alert('Please enter your old mobile number');
+    if (!newPassword) {
+      alert('Please enter your new password');
       return;
     }
-    if (!newMobile) {
-      alert('Please enter your new mobile number');
+    if (!confirmPassword) {
+      alert('Please confirm your new password');
       return;
     }
-    if (!confirmMobile) {
-      alert('Please confirm your new mobile number');
-      return;
-    }
-    if (newMobile !== confirmMobile) {
-      alert('New mobile numbers do not match');
+    if (newPassword !== confirmPassword) {
+      alert('New passwords do not match');
       return;
     }
 
-    // Navigate to profile2Setting2.jsx
-    router.push('/screens/profile2Setting2');
+    // Change password logic would go here
+    alert('Password changed successfully');
+    router.push('/screens/profile');
   };
 
   return (
@@ -64,72 +60,59 @@ export default function ChangeMobileScreen() {
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.logoText}>
-              <Text style={{ color: '#1E88E5', fontWeight: 'bold' }}>D</Text>
-              <Text style={{ color: '#333', fontWeight: 'bold' }}>uthaya</Text>
-            </Text>
+            <View style={styles.logoContainer}>
+              <Text style={styles.logoText}>
+                <Text style={{ color: '#1E88E5', fontWeight: 'bold' }}>D</Text>
+                <Text style={{ color: '#333', fontWeight: 'bold' }}>uthaya</Text>
+              </Text>
+            </View>
           </View>
 
           {/* Title */}
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Change Mobile Number</Text>
+            <Text style={styles.title}>Change Password</Text>
           </View>
 
           {/* Form */}
           <View style={styles.formContainer}>
             <View style={styles.inputWrapper}>
-              <Text style={styles.inputLabel}>Password</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder="Current Password"
                 placeholderTextColor="#A0A0A0"
                 secureTextEntry
-                value={password}
-                onChangeText={setPassword}
+                value={currentPassword}
+                onChangeText={setCurrentPassword}
               />
             </View>
             
             <View style={styles.inputWrapper}>
-              <Text style={styles.inputLabel}>Old mobile number</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Old mobile number"
+                placeholder="New Password"
                 placeholderTextColor="#A0A0A0"
-                keyboardType="phone-pad"
-                value={oldMobile}
-                onChangeText={setOldMobile}
+                secureTextEntry
+                value={newPassword}
+                onChangeText={setNewPassword}
               />
             </View>
             
             <View style={styles.inputWrapper}>
-              <Text style={styles.inputLabel}>New mobile number</Text>
               <TextInput
                 style={styles.input}
-                placeholder="New mobile number"
+                placeholder="Confirm Password"
                 placeholderTextColor="#A0A0A0"
-                keyboardType="phone-pad"
-                value={newMobile}
-                onChangeText={setNewMobile}
-              />
-            </View>
-            
-            <View style={styles.inputWrapper}>
-              <Text style={styles.inputLabel}>Confirm new mobile number</Text>
-              <TextInput
-                style={[styles.input, styles.confirmInput]}
-                placeholder="Confirm new mobile number"
-                placeholderTextColor="#A0A0A0"
-                keyboardType="phone-pad"
-                value={confirmMobile}
-                onChangeText={setConfirmMobile}
+                secureTextEntry
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
               />
             </View>
 
             <TouchableOpacity 
-              style={styles.sendOtpButton} 
-              onPress={handleSendOTP}
+              style={styles.changeButton} 
+              onPress={handleChangePassword}
             >
-              <Text style={styles.sendOtpText}>Change</Text>
+              <Text style={styles.changeButtonText}>Change</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -137,27 +120,42 @@ export default function ChangeMobileScreen() {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/profile')}>
+        <TouchableOpacity 
+          style={[styles.navItem, styles.activeNavItem]} 
+          onPress={() => router.push('/screens/profile')}
+        >
           <FontAwesome name="user" size={24} color="#1E88E5" />
           <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/notifications')}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => router.push('/screens/notifications')}
+        >
           <Ionicons name="notifications-outline" size={24} color="#666" />
           <Text style={styles.navText}>Notifications</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/home')}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => router.push('/screens/home')}
+        >
           <Ionicons name="home-outline" size={24} color="#666" />
           <Text style={styles.navText}>Home</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/settings')}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => router.push('/screens/settings')}
+        >
           <Ionicons name="settings-outline" size={24} color="#666" />
           <Text style={styles.navText}>Settings</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/help-support')}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => router.push('/screens/help-support')}
+        >
           <MaterialIcons name="help-outline" size={24} color="#666" />
           <Text style={styles.navText}>Help/Support</Text>
         </TouchableOpacity>
@@ -185,22 +183,23 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 300,
     alignItems: 'center',
     justifyContent: 'center',
+ 
   },
   logoText: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
   },
   titleContainer: {
-    width: '90%',
+    width: '80%',
     backgroundColor: '#E5E5E5',
     alignSelf: 'center',
     marginTop: 20,
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 20,
     alignItems: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
   },
@@ -213,12 +212,6 @@ const styles = StyleSheet.create({
   inputWrapper: {
     marginBottom: 15,
   },
-  inputLabel: {
-    fontSize: 14,
-    color: '#333',
-    marginBottom: 5,
-    marginLeft: 2,
-  },
   input: {
     backgroundColor: 'white',
     borderWidth: 1,
@@ -227,17 +220,14 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 16,
   },
-  confirmInput: {
-    borderColor: '#8A2BE2', // Purple border for the confirm field
-  },
-  sendOtpButton: {
+  changeButton: {
     backgroundColor: '#0A235C', // Dark blue button
     borderRadius: 5,
     padding: 15,
     alignItems: 'center',
     marginTop: 20,
   },
-  sendOtpText: {
+  changeButtonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
@@ -256,6 +246,9 @@ const styles = StyleSheet.create({
   },
   navItem: {
     alignItems: 'center',
+  },
+  activeNavItem: {
+    // Styling for active item
   },
   navText: {
     fontSize: 12,
