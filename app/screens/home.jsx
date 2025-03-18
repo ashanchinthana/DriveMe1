@@ -20,10 +20,10 @@ export default function Home() {
                                             </TouchableOpacity>
             <View style={styles.halfCircle}>
                 
-                <Text style={styles.logoText}>
-                    <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
-                  
-                </Text>
+                <Image 
+                                source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                                style={styles.image}
+                            />
             </View>
 
             {/* Buttons */}
@@ -93,6 +93,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         top: 0
+    },
+    image: {
+        width: 250, // Adjust width as needed
+        height: 250, // Adjust height as needed
+        resizeMode: 'contain', // Ensures the image maintains aspect ratio
     },
     logoText: {
         fontSize: 35,

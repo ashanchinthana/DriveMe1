@@ -21,7 +21,7 @@ export default function Index() {
                     style={styles.button}
                     onPress={() => router.push('../screens/signIn')} 
                 >
-                    <Text style={styles.buttonText}>Get Started</Text>
+                    <Text style={styles.buttonText}>Log in</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 600,
-        height: 600,
+        height: 500,
         resizeMode: 'contain',
         marginTop: 50,
     },
