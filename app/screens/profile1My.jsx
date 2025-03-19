@@ -101,7 +101,7 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.fieldContainer}>
-              <Text style={styles.fieldLabel}>Location</Text>
+              <Text style={styles.fieldLabel}>Postal code</Text>
               <TextInput
                 style={styles.fieldInput}
                 value={userData.location}

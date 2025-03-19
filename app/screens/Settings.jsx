@@ -73,13 +73,13 @@ export default function SettingsScreen() {
                 <TouchableOpacity 
                     style={[styles.navItem, styles.navItemActive]}
                 >
-                    <Ionicons name="setting_outline" size={22} color="white" />
+                    <Ionicons name="setting-outline" size={24} color="#1E88E5" />
                     <Text style={[styles.navText, styles.navTextActive]}>Setting</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                     style={styles.navItem} 
-                    onPress={() => router.push('/screens/HelpSupport')}
+                    onPress={() => router.push('/screens/helpAndSupport')}
                 >
                     <MaterialIcons name="support-agent" size={22} color="#777" />
                     <Text style={styles.navText}>Help/Support</Text>
@@ -133,10 +133,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#F5F5F5',
-        paddingVertical: 8,
-        borderTopWidth: 1,
-        borderColor: '#EBEBEB',
+        backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#EEEEEE',
     },
     navItem: {
         alignItems: 'center',
