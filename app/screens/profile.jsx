@@ -43,10 +43,10 @@ export default function ProfileScreen() {
         </TouchableOpacity>
 
 
-        <Text style={styles.logoText}>
-          <Text style={{ color: '#1E88E5', fontWeight: 'bold' }}>D</Text>
-          <Text style={{ color: '#333', fontWeight: 'bold' }}>uthaya</Text>
-        </Text>
+        <Image
+          source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+          style={styles.image}
+        />
       </View>
 
       {/* Profile Information */}
@@ -97,13 +97,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
   },
-  backButton: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    padding: 8,
-    borderRadius: 20,
+  image: {
+    width: 250, // Adjust width as needed
+    height: 250, // Adjust height as needed
+    resizeMode: 'contain', // Ensures the image maintains aspect ratio
   },
   logoText: {
     fontSize: 32,
@@ -170,5 +167,6 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    shadowRadius: 4,}
+    shadowRadius: 4,
+  }
 });

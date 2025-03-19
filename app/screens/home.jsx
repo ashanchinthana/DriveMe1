@@ -23,7 +23,7 @@ export default function Home() {
                 <Image 
                                 source={require('../../assets/images/z.png')} //DRIVE ME LOGO
                                 style={styles.image}
-                            />
+                 />
             </View>
 
             {/* Buttons */}

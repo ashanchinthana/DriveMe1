@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
@@ -10,6 +10,8 @@ export default function SettingsScreen() {
         <SafeAreaView style={styles.container}>
             {/* Half-Circle Header with Logo */}
             <View style={styles.halfCircle}>
+
+                
                  {/* Back Button */}
                         <TouchableOpacity 
                           style={styles.backButton} 
@@ -17,10 +19,13 @@ export default function SettingsScreen() {
                         >
                           <Ionicons name="arrow-back" size={24} color="#333" />
                         </TouchableOpacity>
-                <Text style={styles.logoText}>
-                    <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
-                </Text>
+                        
+                <Image 
+                    source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                    style={styles.image}
+                />
             </View>
+            
 
             {/* Settings Options */}
             <View style={styles.settingsContainer}>
@@ -61,15 +66,15 @@ export default function SettingsScreen() {
                     style={styles.navItem} 
                     onPress={() => router.push('/screens/home')}
                 >
-                    <Ionicons name="home" size={22} color="#777" />
+                    <Ionicons name="home-outline" size={22} color="#777" />
                     <Text style={styles.navText}>Home</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
                     style={[styles.navItem, styles.navItemActive]}
                 >
-                    <Ionicons name="menu" size={22} color="white" />
-                    <Text style={[styles.navText, styles.navTextActive]}>Menu</Text>
+                    <Ionicons name="setting_outline" size={22} color="white" />
+                    <Text style={[styles.navText, styles.navTextActive]}>Setting</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
@@ -99,10 +104,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 40,
     },
-    logoText: {
-        fontSize: 35,
-        fontWeight: 'bold',
-        color: '#333',
+    image: {
+        width: 250,
+        height: 250,
+        resizeMode: 'contain',
     },
     settingsContainer: {
         paddingHorizontal: 40,
@@ -166,5 +171,6 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
-        shadowRadius: 4,}
+        shadowRadius: 4
+    }
 });

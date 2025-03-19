@@ -38,9 +38,10 @@ export default function PaymentHistory() {
                                 >
                                     <Ionicons name="arrow-back" size={24} color="#333" />
                                 </TouchableOpacity>
-                <Text style={styles.logoText}>
-                    <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
-                </Text>
+                <Image
+                    source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                    style={styles.image}
+                />
             </View>
 
             {/* Payment History List */}
@@ -117,10 +118,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0
     },
-    logoText: {
-        fontSize: 35,
-        fontWeight: 'bold',
-        color: '#333',
+    image: {
+        width: 250, // Adjust width as needed
+        height: 250, // Adjust height as needed
+        resizeMode: 'contain', // Ensures the image maintains aspect ratio
     },
     card: {
         flexDirection: 'row',
@@ -233,5 +234,6 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
-        shadowRadius: 4,}
+        shadowRadius: 4,
+    }
 });

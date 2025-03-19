@@ -31,12 +31,14 @@ export default function SignUp() {
                 <TextInput 
                     style={styles.input}
                     placeholder="ID Number"
+                    placeholderTextColor="#999"
                     value={form.idNumber}
                     onChangeText={(text) => setForm({ ...form, idNumber: text })}
                 />
                 <TextInput 
                     style={styles.input}
                     placeholder="Password"
+                    placeholderTextColor="#999"
                     secureTextEntry={true}
                     value={form.password}
                     onChangeText={(text) => setForm({ ...form, password: text })}
@@ -82,8 +84,8 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 40,
-        left: 20,
+        top: 10,
+        left: 10,
         width: 40,
         height: 40,
         borderRadius: 20,

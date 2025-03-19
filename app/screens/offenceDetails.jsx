@@ -5,7 +5,8 @@ import {
   StyleSheet, 
   TouchableOpacity, 
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
@@ -79,18 +80,18 @@ export default function OffenceDetailsScreen() {
 
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.logoText}>
-          <Text style={{ color: '#1E88E5', fontWeight: 'bold' }}>D</Text>
-          <Text style={{ color: '#333', fontWeight: 'bold' }}>uthaya</Text>
-        </Text>
+        <Image
+          source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+          style={styles.image}
+        />
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+     
         {/* Title */}
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Offence Details</Text>
         </View>
-
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* Offences List Card */}
         <View style={styles.offencesCard}>
           {offences.map((offence, index) => (
@@ -172,16 +173,17 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: 180,
+    height: 250,
     backgroundColor: '#D3D3D3',
     borderBottomLeftRadius: 300,
     borderBottomRightRadius: 300,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logoText: {
-    fontSize: 32,
-    fontWeight: 'bold',
+  image: {
+    width: 250, // Adjust width as needed
+    height: 250, // Adjust height as needed
+    resizeMode: 'contain', // Ensures the image maintains aspect ratio
   },
   backButton: {
     position: 'absolute',
@@ -213,7 +215,7 @@ const styles = StyleSheet.create({
   offencesCard: {
     width: '90%',
     alignSelf: 'center',
-    marginTop: 15,
+    marginTop: 25,
     backgroundColor: '#E5E5E5',
     borderRadius: 10,
     padding: 15,

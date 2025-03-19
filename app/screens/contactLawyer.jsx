@@ -6,7 +6,8 @@ import {
   TouchableOpacity, 
   SafeAreaView,
   ScrollView,
-  Linking
+  Linking,
+  Image
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialIcons, FontAwesome, Feather } from '@expo/vector-icons';
@@ -54,18 +55,18 @@ export default function ContactLawyerScreen() {
 
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.logoText}>
-          <Text style={{ color: '#1E88E5', fontWeight: 'bold' }}>D</Text>
-          <Text style={{ color: '#333', fontWeight: 'bold' }}>uthaya</Text>
-        </Text>
+        <Image
+          source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+          style={styles.image}
+        />
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+     
         {/* Title */}
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Contact lawyer</Text>
         </View>
-
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* Lawyers List */}
         {lawyers.map((lawyer, index) => (
           <View key={index} style={styles.lawyerCard}>
@@ -166,9 +167,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logoText: {
-    fontSize: 32,
-    fontWeight: 'bold',
+  image: {
+    width: 250, // Adjust width as needed
+    height: 250, // Adjust height as needed
+    resizeMode: 'contain', // Ensures the image maintains aspect ratio
   },
   backButton: {
     position: 'absolute',

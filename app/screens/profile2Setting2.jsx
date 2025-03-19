@@ -8,7 +8,8 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
@@ -45,10 +46,10 @@ export default function ChangeMobileScreen() {
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.header}>
             <View style={styles.logoContainer}>
-              <Text style={styles.logoText}>
-                <Text style={{ color: '#1E88E5', fontWeight: 'bold' }}>D</Text>
-                <Text style={{ color: '#333', fontWeight: 'bold' }}>uthaya</Text>
-              </Text>
+              <Image
+                source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                style={styles.image}
+              />
             </View>
           </View>
 
@@ -122,34 +123,43 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: '#1E88E5',
   },
-  
- 
+  image: {
+    width: 250, // Adjust width as needed
+    height: 250, // Adjust height as needed
+    resizeMode: 'contain', // Ensures the image maintains aspect ratio
+  },
   changeButton: {
-        backgroundColor: '#0A235C', // Dark blue button
-        borderRadius: 5,
-        padding: 15,
-        alignItems: 'center',
-        marginTop: 20,
+    backgroundColor: '#0A235C', // Dark blue button
+    borderRadius: 5,
+    padding: 15,
+    alignItems: 'center',
+    marginTop: 20,
   },
   changeButtonText: { 
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
-   
-  
-   
   },
-  logoText: {
-    fontSize: 28,
-    fontWeight: 'bold',
+  logoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backButton: {
     position: 'absolute',
-    top: 50,
-    left: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    top: 10,
+    left: 10,
+    width: 40,
+    height: 40,
     borderRadius: 20,
-    padding: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   titleContainer: {
     width: '80%',
@@ -178,22 +188,5 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 15,
     fontSize: 16,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
   }
 });

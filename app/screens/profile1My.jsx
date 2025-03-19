@@ -36,9 +36,10 @@ export default function ProfileScreen() {
 
       {/* Half-Circle Header with Logo - keep outside ScrollView for fixed position */}
       <View style={styles.halfCircle}>
-        <Text style={styles.logoText}>
-          <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
-        </Text>
+        <Image
+          source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+          style={styles.image}
+        />
       </View>
 
       <ScrollView 
@@ -191,10 +192,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 1, // Ensure the half circle is below the back button
   },
-  logoText: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    color: '#333',
+  image: {
+    width: 250, // Adjust width as needed
+    height: 250, // Adjust height as needed
+    resizeMode: 'contain', // Ensures the image maintains aspect ratio
   },
   titleContainer: {
     width: '90%',

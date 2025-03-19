@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SignUp() {
     const router = useRouter();
@@ -21,17 +22,66 @@ export default function SignUp() {
                 <Text style={styles.subtitle}>Create your new account</Text>
             </View>
 
+            {/* Back Button */}
+            <TouchableOpacity 
+                style={styles.backButton} 
+                onPress={() => router.back()}
+            >
+                <Ionicons name="arrow-back" size={24} color="#333" />
+            </TouchableOpacity>
+
             {/* Input Fields */}
             <View style={styles.form}>
-                {["Name", "ID Number", "Phone", "Postal Code", "E-mail", "Password"].map((placeholder, index) => (
-                    <TextInput 
-                        key={index}
-                        style={styles.input}
-                        placeholder={placeholder}
-                        secureTextEntry={placeholder === "Password"}
-                        onChangeText={(text) => setForm({ ...form, [placeholder.toLowerCase().replace(" ", "")]: text })}
-                    />
-                ))}
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Name"
+                    placeholderTextColor="#999"
+                    onChangeText={(text) => setForm({ ...form, name: text })}
+                />
+                <TextInput 
+                    style={styles.input}
+                    placeholder="ID Number"
+                    placeholderTextColor="#999"
+                    onChangeText={(text) => setForm({ ...form, idNumber: text })}
+                />
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Phone number"
+                    placeholderTextColor="#999"
+                    onChangeText={(text) => setForm({ ...form, phone: text })}
+                />
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Dl number"
+                    placeholderTextColor="#999"
+                    onChangeText={(text) => setForm({ ...form, postalCode: text })}
+                />
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Dl expire date"
+                    placeholderTextColor="#999"
+                    onChangeText={(text) => setForm({ ...form, postalCode: text })}
+                />
+                <TextInput 
+                    style={styles.input}
+                    placeholder="E-mail"
+                    placeholderTextColor="#999"
+                    onChangeText={(text) => setForm({ ...form, email: text })}
+                />
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Password"
+                    placeholderTextColor="#999"
+                    secureTextEntry={true}
+                    onChangeText={(text) => setForm({ ...form, password: text })}
+                />
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Confirm password"
+                    placeholderTextColor="#999"
+                    secureTextEntry={true}
+                    onChangeText={(text) => setForm({ ...form, password: text })}
+                />
 
                 {/* Create Account Button */}
                 <TouchableOpacity 
@@ -59,8 +109,32 @@ const styles = StyleSheet.create({
         padding: 20
     },
     halfCircle: {
-      
-        
+        width: '109%',
+        height: 250, 
+        backgroundColor: '#D3D3D3', 
+        borderBottomLeftRadius: 300,
+        borderBottomRightRadius: 300,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0  
+    },
+    backButton: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
     },
     title: {
         fontSize: 28,
@@ -73,7 +147,7 @@ const styles = StyleSheet.create({
     },
     form: {
         width: '100%',
-        marginTop: 150 // Adjusted to place form below the half-circle
+        marginTop: 250 // Adjusted to place form below the half-circle
     },
     input: {
         backgroundColor: '#FFF',

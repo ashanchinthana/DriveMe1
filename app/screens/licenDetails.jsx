@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
@@ -17,9 +17,10 @@ export default function LicenseDetails() {
                                 >
                                     <Ionicons name="arrow-back" size={24} color="#333" />
                                 </TouchableOpacity>
-                <Text style={styles.logoText}>
-                    <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
-                </Text>
+                <Image
+                    source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                    style={styles.image}
+                />
             </View>
 
             {/* Title */}
@@ -96,22 +97,23 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0
     },
-    logoText: {
-        fontSize: 35,
-        fontWeight: 'bold',
-        color: '#333',
+    image: {
+        width: 250, // Adjust width as needed
+        height: 250, // Adjust height as needed
+        resizeMode: 'contain', // Ensures the image maintains aspect ratio
     },
     title: {
         fontSize: 40,
         fontWeight: 'bold',
-        marginTop: 14,
+        marginTop: 54,
         marginBottom: 60,
     },
     infoCard: {
         backgroundColor: '#fff',
         padding: 25,
         borderRadius: 10,
-        width: '90%',marginBottom: 20,
+        width: '90%',
+        marginBottom: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
@@ -205,5 +207,6 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
-        shadowRadius: 4,}
+        shadowRadius: 4,
+    }
 });
