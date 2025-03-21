@@ -1,14 +1,51 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { authService } from '../services/api';
 
-export default function SignUp() {
+export default function SignIn() {
     const router = useRouter();
     const [form, setForm] = useState({
         idNumber: '',
         password: ''
     });
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+
+    const validate = () => {
+        const newErrors = {};
+        
+        if (!form.idNumber) newErrors.idNumber = 'ID Number is required';
+        if (!form.password) newErrors.password = 'Password is required';
+        
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleLogin = async () => {
+        if (!validate()) return;
+        
+        setLoading(true);
+        try {
+            console.log('Attempting login with:', form);
+            
+            // Make API call to login
+            const response = await authService.login({
+                idNumber: form.idNumber,
+                password: form.password
+            });
+            
+            // Successfully logged in, navigate to home
+            router.push('/screens/home');
+        } catch (error) {
+            console.error('Login error:', error);
+            const message = error.response?.data?.message || 'Failed to login. Please try again.';
+            Alert.alert('Login Failed', message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -29,27 +66,45 @@ export default function SignUp() {
             {/* Input Fields */}
             <View style={styles.form}>
                 <TextInput 
-                    style={styles.input}
+                    style={[styles.input, errors.idNumber && styles.inputError]}
                     placeholder="ID Number"
                     placeholderTextColor="#999"
                     value={form.idNumber}
-                    onChangeText={(text) => setForm({ ...form, idNumber: text })}
+                    onChangeText={(text) => {
+                        setForm({ ...form, idNumber: text });
+                        if (errors.idNumber) {
+                            setErrors({ ...errors, idNumber: null });
+                        }
+                    }}
                 />
+                {errors.idNumber && <Text style={styles.errorText}>{errors.idNumber}</Text>}
+                
                 <TextInput 
-                    style={styles.input}
+                    style={[styles.input, errors.password && styles.inputError]}
                     placeholder="Password"
                     placeholderTextColor="#999"
                     secureTextEntry={true}
                     value={form.password}
-                    onChangeText={(text) => setForm({ ...form, password: text })}
+                    onChangeText={(text) => {
+                        setForm({ ...form, password: text });
+                        if (errors.password) {
+                            setErrors({ ...errors, password: null });
+                        }
+                    }}
                 />
+                {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
                 {/* Login Button */}
                 <TouchableOpacity 
                     style={styles.createButton}
-                    onPress={() => router.push('/screens/home')}
+                    onPress={handleLogin}
+                    disabled={loading}
                 >
-                    <Text style={styles.createButtonText}>Login</Text>
+                    {loading ? (
+                        <ActivityIndicator color="#fff" />
+                    ) : (
+                        <Text style={styles.createButtonText}>Login</Text>
+                    )}
                 </TouchableOpacity>
                 
                 <TouchableOpacity onPress={() => router.push('/screens/already')}>
@@ -116,6 +171,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#0A66C2',
         fontSize: 16,
+    },
+    inputError: {
+        borderColor: 'red',
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginLeft: 5,
+        marginTop: -8,
     },
     createButton: {
         backgroundColor: '#0A0A50',
