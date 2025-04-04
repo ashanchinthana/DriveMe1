@@ -18,9 +18,10 @@ export default function OutstandingFines() {
                                     <Ionicons name="arrow-back" size={24} color="#333" />
                                 </TouchableOpacity>
                 
-                <Text style={styles.logoText}>
-                    <Text style={{ color: "#0A66C2", fontSize: 40 }}>D</Text>uthaya
-                </Text>
+                <Image 
+                                    source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                                    style={styles.image}
+                                />
             </View>
 
             {/* Outstanding Fines Section */}
@@ -118,6 +119,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginTop: 250,
         marginBottom: 20,
+    },
+    image: {
+        width: 250, // Adjust width as needed
+        height: 250, // Adjust height as needed
+        resizeMode: 'contain', // Ensures the image maintains aspect ratio
     },
     table: {
         width: "90%",

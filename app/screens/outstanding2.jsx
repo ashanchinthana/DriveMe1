@@ -17,9 +17,10 @@ export default function PaymentScreen() {
                                                 >
                                                     <Ionicons name="arrow-back" size={24} color="#333" />
                                                 </TouchableOpacity>
-                <Text style={styles.logoText}>
-                    <Text style={{ color: "#0A66C2", fontSize: 40 }}>D</Text>uthaya
-                </Text>
+                <Image 
+                                    source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                                    style={styles.image}
+                                />
             </View>
 
             {/* Title */}
@@ -99,6 +100,11 @@ const styles = StyleSheet.create({
         top: 0,
 
       
+    },
+    image: {
+        width: 250, // Adjust width as needed
+        height: 250, // Adjust height as needed
+        resizeMode: 'contain', // Ensures the image maintains aspect ratio
     },
     logoText: {
         fontSize: 35,

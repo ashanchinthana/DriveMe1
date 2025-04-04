@@ -6,6 +6,8 @@ import axios from 'axios';
 
 export default function SignUp() {
     const router = useRouter();
+    
+    // Form state to track all input values
     const [form, setForm] = useState({
         name: '',
         idNumber: '',
@@ -16,44 +18,98 @@ export default function SignUp() {
         password: '',
         confirmPassword: ''
     });
+    
+    // Track loading state for the submit button
     const [loading, setLoading] = useState(false);
+    
+    // Store validation errors for each field
     const [errors, setErrors] = useState({});
 
+    // Comprehensive validation for all form fields
     const validate = () => {
         const newErrors = {};
         
-        // Validate each field
-        if (!form.name) newErrors.name = 'Name is required';
-        if (!form.idNumber) newErrors.idNumber = 'ID Number is required';
-        if (!form.phone) newErrors.phone = 'Phone number is required';
-        if (!form.dlNumber) newErrors.dlNumber = 'DL number is required';
-        if (!form.dlExpireDate) newErrors.dlExpireDate = 'DL expire date is required';
+        // Validate name (required)
+        if (!form.name.trim()) {
+            newErrors.name = 'Name is required';
+        }
         
-        // Email validation
+        // Validate ID Number (required, must be 12 characters)
+        if (!form.idNumber) {
+            newErrors.idNumber = 'ID Number is required';
+        } else if (form.idNumber.length !== 12) {
+            newErrors.idNumber = 'ID Number must be exactly 12 characters';
+        } else if (!/^\d+$/.test(form.idNumber)) {
+            newErrors.idNumber = 'ID Number must contain only digits';
+        }
+        
+        // Validate phone (required, must be 10 digits)
+        if (!form.phone) {
+            newErrors.phone = 'Phone number is required';
+        } else if (!/^\d{10}$/.test(form.phone)) {
+            newErrors.phone = 'Phone number must be exactly 10 digits';
+        }
+        
+        // Validate DL number (required)
+        if (!form.dlNumber) {
+            newErrors.dlNumber = 'DL number is required';
+        }
+        
+        // Validate DL expire date (required, must be in YYYY-MM-DD format)
+        if (!form.dlExpireDate) {
+            newErrors.dlExpireDate = 'DL expire date is required';
+        } else if (!/^\d{4}-\d{2}-\d{2}$/.test(form.dlExpireDate)) {
+            newErrors.dlExpireDate = 'Date must be in YYYY-MM-DD format';
+        } else {
+            // Check if it's a valid date
+            const date = new Date(form.dlExpireDate);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
+            
+            if (isNaN(date.getTime())) {
+                newErrors.dlExpireDate = 'Please enter a valid date';
+            } else if (date < today) {
+                newErrors.dlExpireDate = 'Expiry date cannot be in the past';
+            }
+        }
+        
+        // Email validation (required, must be valid email format)
         if (!form.email) {
             newErrors.email = 'Email is required';
         } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-            newErrors.email = 'Email is invalid';
+            newErrors.email = 'Please enter a valid email address';
         }
         
-        // Password validation
+        // Password validation (required, must be at least 6 characters with uppercase and lowercase)
         if (!form.password) {
             newErrors.password = 'Password is required';
         } else if (form.password.length < 6) {
             newErrors.password = 'Password must be at least 6 characters';
+        } else if (!/[A-Z]/.test(form.password)) {
+            newErrors.password = 'Password must include an uppercase letter';
+        } else if (!/[a-z]/.test(form.password)) {
+            newErrors.password = 'Password must include a lowercase letter';
         }
         
         // Confirm password validation
-        if (form.password !== form.confirmPassword) {
+        if (!form.confirmPassword) {
+            newErrors.confirmPassword = 'Please confirm your password';
+        } else if (form.password !== form.confirmPassword) {
             newErrors.confirmPassword = 'Passwords do not match';
         }
         
+        // Update the errors state and return validation result
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        return Object.keys(newErrors).length === 0; // Returns true if no errors
     };
 
+    // Handle form submission and API call
     const handleRegister = async () => {
-        if (!validate()) return;
+        // First validate all fields
+        if (!validate()) {
+            // If validation fails, scroll to top to show errors
+            return;
+        }
         
         setLoading(true);
         try {
@@ -62,7 +118,8 @@ export default function SignUp() {
             // Format the date properly for API
             const formattedDate = new Date(form.dlExpireDate).toISOString();
             
-            await axios.post('http://localhost:5002/api/auth/register', {
+            // Make the API call to register the user
+            const response = await axios.post('http://192.168.8.104:5002/api/auth/register', {
                 name: form.name,
                 idNumber: form.idNumber,
                 phone: form.phone,
@@ -72,17 +129,72 @@ export default function SignUp() {
                 password: form.password
             });
             
+            console.log('Registration successful:', response.data);
+            
+            // Show success message and navigate to sign in page
             Alert.alert(
                 'Registration Successful', 
                 'Your account has been created successfully!',
-                [{ text: 'OK', onPress: () => router.push('/screens/signIn') }]
+                [{ 
+                    text: 'OK', 
+                    onPress: () => {
+                        // Navigate to the sign in page after successful registration
+                        router.push('/screens/signIn');
+                    } 
+                }]
             );
         } catch (error) {
             console.error('Registration error:', error);
-            const message = error.response?.data?.message || 'Registration failed. Please try again.';
-            Alert.alert('Registration Failed', message);
+            
+            // Handle different types of errors
+            let errorMessage = 'Registration failed. Please try again.';
+            let shouldRedirect = false;
+            let alertTitle = 'Registration Failed';
+            
+            if (error.response) {
+                // The server responded with an error
+                errorMessage = error.response.data.message || errorMessage;
+                console.log('Server error response:', error.response.data);
+                
+                // Check if this is the "user already exists" error
+                if (errorMessage.includes('User already exists')) {
+                    errorMessage = 'An account with this email, ID, or driver\'s license already exists. Please sign in instead.';
+                    alertTitle = 'Account Already Exists';
+                    shouldRedirect = true;
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                errorMessage = 'No response from server. Please check your internet connection.';
+            } else {
+                // Something happened in setting up the request
+                errorMessage = error.message || errorMessage;
+            }
+            
+            Alert.alert(
+                alertTitle, 
+                errorMessage,
+                [{ 
+                    text: 'OK', 
+                    onPress: () => {
+                        // If it's a "user exists" error, redirect to sign in
+                        if (shouldRedirect) {
+                            router.push('/screens/signIn');
+                        }
+                    } 
+                }]
+            );
         } finally {
             setLoading(false);
+        }
+    };
+
+    // Helper function to update form fields and clear errors
+    const updateField = (field, value) => {
+        setForm(prevForm => ({ ...prevForm, [field]: value }));
+        
+        // Clear error for this field if it exists
+        if (errors[field]) {
+            setErrors(prevErrors => ({ ...prevErrors, [field]: null }));
         }
     };
 
@@ -105,103 +217,91 @@ export default function SignUp() {
 
                 {/* Input Fields */}
                 <View style={styles.form}>
+                    {/* Name Field */}
                     <TextInput 
                         style={[styles.input, errors.name && styles.inputError]}
                         placeholder="Name"
                         placeholderTextColor="#999"
                         value={form.name}
-                        onChangeText={(text) => {
-                            setForm({ ...form, name: text });
-                            if (errors.name) setErrors({ ...errors, name: null });
-                        }}
+                        onChangeText={(text) => updateField('name', text)}
                     />
                     {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
                     
+                    {/* ID Number Field */}
                     <TextInput 
                         style={[styles.input, errors.idNumber && styles.inputError]}
-                        placeholder="ID Number"
+                        placeholder="ID Number (12 characters)"
                         placeholderTextColor="#999"
                         value={form.idNumber}
-                        onChangeText={(text) => {
-                            setForm({ ...form, idNumber: text });
-                            if (errors.idNumber) setErrors({ ...errors, idNumber: null });
-                        }}
+                        keyboardType="numeric"
+                        maxLength={12}
+                        onChangeText={(text) => updateField('idNumber', text)}
                     />
                     {errors.idNumber && <Text style={styles.errorText}>{errors.idNumber}</Text>}
                     
+                    {/* Phone Number Field */}
                     <TextInput 
                         style={[styles.input, errors.phone && styles.inputError]}
-                        placeholder="Phone number"
+                        placeholder="Phone number (10 digits)"
                         placeholderTextColor="#999"
                         keyboardType="phone-pad"
                         value={form.phone}
-                        onChangeText={(text) => {
-                            setForm({ ...form, phone: text });
-                            if (errors.phone) setErrors({ ...errors, phone: null });
-                        }}
+                        maxLength={10}
+                        onChangeText={(text) => updateField('phone', text)}
                     />
                     {errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
                     
+                    {/* DL Number Field */}
                     <TextInput 
                         style={[styles.input, errors.dlNumber && styles.inputError]}
                         placeholder="DL number"
                         placeholderTextColor="#999"
                         value={form.dlNumber}
-                        onChangeText={(text) => {
-                            setForm({ ...form, dlNumber: text });
-                            if (errors.dlNumber) setErrors({ ...errors, dlNumber: null });
-                        }}
+                        onChangeText={(text) => updateField('dlNumber', text)}
                     />
                     {errors.dlNumber && <Text style={styles.errorText}>{errors.dlNumber}</Text>}
                     
+                    {/* DL Expire Date Field */}
                     <TextInput 
                         style={[styles.input, errors.dlExpireDate && styles.inputError]}
                         placeholder="DL expire date (YYYY-MM-DD)"
                         placeholderTextColor="#999"
                         value={form.dlExpireDate}
-                        onChangeText={(text) => {
-                            setForm({ ...form, dlExpireDate: text });
-                            if (errors.dlExpireDate) setErrors({ ...errors, dlExpireDate: null });
-                        }}
+                        onChangeText={(text) => updateField('dlExpireDate', text)}
                     />
                     {errors.dlExpireDate && <Text style={styles.errorText}>{errors.dlExpireDate}</Text>}
                     
+                    {/* Email Field */}
                     <TextInput 
                         style={[styles.input, errors.email && styles.inputError]}
                         placeholder="E-mail"
                         placeholderTextColor="#999"
                         keyboardType="email-address"
                         value={form.email}
-                        onChangeText={(text) => {
-                            setForm({ ...form, email: text });
-                            if (errors.email) setErrors({ ...errors, email: null });
-                        }}
+                        onChangeText={(text) => updateField('email', text)}
+                        autoCapitalize="none"
                     />
                     {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
                     
+                    {/* Password Field */}
                     <TextInput 
                         style={[styles.input, errors.password && styles.inputError]}
-                        placeholder="Password"
+                        placeholder="Password (include uppercase & lowercase letters)"
                         placeholderTextColor="#999"
                         secureTextEntry={true}
                         value={form.password}
-                        onChangeText={(text) => {
-                            setForm({ ...form, password: text });
-                            if (errors.password) setErrors({ ...errors, password: null });
-                        }}
+                        onChangeText={(text) => updateField('password', text)}
                     />
                     {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
                     
+                    {/* Confirm Password Field */}
                     <TextInput 
                         style={[styles.input, errors.confirmPassword && styles.inputError]}
                         placeholder="Confirm password"
                         placeholderTextColor="#999"
                         secureTextEntry={true}
                         value={form.confirmPassword}
-                        onChangeText={(text) => {
-                            setForm({ ...form, confirmPassword: text });
-                            if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: null });
-                        }}
+                        onChangeText={(text) => updateField('confirmPassword', text)}
                     />
                     {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
@@ -24,9 +24,10 @@ export default function OutstandingFines() {
                     <Ionicons name="arrow-back" size={24} color="#333" />
                 </TouchableOpacity>
                 
-                <Text style={styles.logoText}>
-                    <Text style={{ color: '#0A66C2', fontSize: 40 }}>D</Text>uthaya
-                </Text>
+                <Image 
+                    source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                    style={styles.image}
+                />
             </View>
 
             {/* Title */}
@@ -99,6 +100,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0
     },
+    image: {
+        width: 250, // Adjust width as needed
+        height: 250, // Adjust height as needed
+        resizeMode: 'contain', // Ensures the image maintains aspect ratio
+    },
     backButton: {
         position: 'absolute',
         top: 10,
@@ -115,11 +121,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-    },
-    logoText: {
-        fontSize: 35,
-        fontWeight: 'bold',
-        color: '#333',
     },
     title: {
         fontSize: 22,

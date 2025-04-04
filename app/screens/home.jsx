@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -11,53 +11,60 @@ export default function Home() {
     const [licenseStatus, setLicenseStatus] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    // Use a callback to make fetchData reusable
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        try {
+            // Get current user
+            const userData = await authService.getCurrentUser();
+            setUser(userData.data);
+            console.log('User data loaded:', userData.data.name);
+
+            // Get outstanding fines
+            try {
+                const finesData = await fineService.getOutstandingFines();
+                setOutstandingFines(finesData.data);
+                console.log('Fines loaded:', finesData.data.length);
+            } catch (fineError) {
+                console.error('Error loading fines:', fineError);
+                // Continue even if fines fail to load
+            }
+
+            // Get license status
+            try {
+                const licenseData = await licenseService.getLicenseStatus();
+                setLicenseStatus(licenseData.data);
+                console.log('License status loaded');
+            } catch (licenseError) {
+                console.error('Error loading license:', licenseError);
+                // Continue even if license fails to load
+            }
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            setError('Failed to load data. Please try again.');
+            
+            // If authentication error, redirect to login
+            if (err.response && err.response.status === 401) {
+                await authService.logout();
+                Alert.alert('Session Expired', 'Please login again.');
+                router.push('/screens/signIn');
+            }
+        } finally {
+            setLoading(false);
+        }
+    }, [router]);
+
+    // Replace router.reload() with this function
+    const handleRetry = () => {
+        setRefreshKey(prev => prev + 1);
+        setError(null);
+    };
 
     useEffect(() => {
-        // Fetch user data and initial dashboard information
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                // Get current user
-                const userData = await authService.getCurrentUser();
-                setUser(userData.data);
-                console.log('User data loaded:', userData.data.name);
-
-                // Get outstanding fines
-                try {
-                    const finesData = await fineService.getOutstandingFines();
-                    setOutstandingFines(finesData.data);
-                    console.log('Fines loaded:', finesData.data.length);
-                } catch (fineError) {
-                    console.error('Error loading fines:', fineError);
-                    // Continue even if fines fail to load
-                }
-
-                // Get license status
-                try {
-                    const licenseData = await licenseService.getLicenseStatus();
-                    setLicenseStatus(licenseData.data);
-                    console.log('License status loaded');
-                } catch (licenseError) {
-                    console.error('Error loading license:', licenseError);
-                    // Continue even if license fails to load
-                }
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                setError('Failed to load data. Please try again.');
-                
-                // If authentication error, redirect to login
-                if (err.response && err.response.status === 401) {
-                    await authService.logout();
-                    Alert.alert('Session Expired', 'Please login again.');
-                    router.push('/screens/signIn');
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchData();
-    }, []);
+    }, [fetchData, refreshKey]);
 
     const handleLogout = async () => {
         try {
@@ -84,7 +91,7 @@ export default function Home() {
                 <Text style={styles.errorText}>{error}</Text>
                 <TouchableOpacity 
                     style={styles.retryButton}
-                    onPress={() => router.reload()}
+                    onPress={handleRetry} // This replaces router.reload()
                 >
                     <Text style={styles.retryButtonText}>Retry</Text>
                 </TouchableOpacity>
