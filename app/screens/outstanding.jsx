@@ -1,21 +1,52 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { fineService, authService } from '../services/api';
 
 export default function OutstandingFines() {
     const router = useRouter();
-    const [form, setForm] = useState({
-        offenceID: '',
-        vehicleNo: '',
-        dlID: '',
-        identityNumber: ''
-    });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    return (
-        <SafeAreaView style={styles.container}>
-            {/* Half-Circle Header with Logo */}
-            <View style={styles.halfCircle}>
+    useEffect(() => {
+        const checkForFines = async () => {
+            try {
+                setLoading(true);
+                
+                // Check if the user is logged in
+                const userData = await authService.getCurrentUser();
+                if (!userData || !userData.data) {
+                    throw new Error('User not authenticated');
+                }
+                
+                // Navigate directly to the fines screen, skipping the search step
+                router.replace('/screens/outstanding1');
+            } catch (error) {
+                console.error('Error checking fines:', error);
+                setError(error.message || 'Failed to load your fine information');
+                setLoading(false);
+            }
+        };
+        
+        checkForFines();
+    }, [router]);
+
+    if (loading) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.halfCircle}>
+                    <Image 
+                        source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                        style={styles.image}
+                    />
+                </View>
+                
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#0A66C2" />
+                    <Text style={styles.loadingText}>Loading your fines...</Text>
+                </View>
+                
                 {/* Back Button */}
                 <TouchableOpacity 
                     style={styles.backButton} 
@@ -24,61 +55,99 @@ export default function OutstandingFines() {
                     <Ionicons name="arrow-back" size={24} color="#333" />
                 </TouchableOpacity>
                 
-                <Image 
-                    source={require('../../assets/images/z.png')} //DRIVE ME LOGO
-                    style={styles.image}
-                />
-            </View>
+                {/* Bottom Navigation */}
+                <View style={styles.bottomNav}>
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
+                        <FontAwesome5 name="user" size={24} color="black" />
+                        <Text style={styles.navText}>Profile</Text>
+                    </TouchableOpacity>
 
-            {/* Title */}
-            <Text style={styles.title}>Outstanding Fines</Text>
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Notifications')}>
+                        <Ionicons name="notifications-outline" size={24} color="black" />
+                        <Text style={styles.navText}>Notifications</Text>
+                    </TouchableOpacity>
 
-            {/* Input Fields */}
-            <View style={styles.form}>
-                {["Offence ID", "Vehicle No", "D.L ID", "Identity number"].map((placeholder, index) => (
-                    <TextInput
-                        key={index}
-                        style={styles.input}
-                        placeholder={placeholder}
-                        onChangeText={(text) => setForm({ ...form, [placeholder.toLowerCase().replace(/ /g, '')]: text })}
+                    {/* Home Button */}
+                    <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/home')}>
+                        <Ionicons name="home" size={30} color="white" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
+                        <Ionicons name="settings-outline" size={24} color="black" />
+                        <Text style={styles.navText}>Settings</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/HelpSupport')}>
+                        <MaterialIcons name="support-agent" size={24} color="black" />
+                        <Text style={styles.navText}>Help/Support</Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        );
+    }
+
+    if (error) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.halfCircle}>
+                    <Image 
+                        source={require('../../assets/images/z.png')} //DRIVE ME LOGO
+                        style={styles.image}
                     />
-                ))}
-
-                {/* Pay Button */}
-                <TouchableOpacity style={styles.payButton} onPress={() => router.push('/screens/outstanding1')}>
-                    <Text style={styles.payButtonText}>Pay</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* Bottom Navigation */}
-            <View style={styles.bottomNav}>
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
-                    <FontAwesome5 name="user" size={24} color="black" />
-                    <Text style={styles.navText}>Profile</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Notifications')}>
-                    <Ionicons name="notifications-outline" size={24} color="black" />
-                    <Text style={styles.navText}>Notifications</Text>
-                </TouchableOpacity>
-
-                {/* Home Button */}
-                <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/home')}>
-                    <Ionicons name="home" size={30} color="white" />
+                </View>
+                
+                <View style={styles.errorContainer}>
+                    <MaterialIcons name="error" size={50} color="red" />
+                    <Text style={styles.errorText}>{error}</Text>
+                    <TouchableOpacity 
+                        style={styles.retryButton}
+                        onPress={() => router.back()}
+                    >
+                        <Text style={styles.retryButtonText}>Go Back</Text>
+                    </TouchableOpacity>
+                </View>
+                
+                {/* Back Button */}
+                <TouchableOpacity 
+                    style={styles.backButton} 
+                    onPress={() => router.back()}
+                >
+                    <Ionicons name="arrow-back" size={24} color="#333" />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
-                    <Ionicons name="settings-outline" size={24} color="black" />
-                    <Text style={styles.navText}>Settings</Text>
-                </TouchableOpacity>
+                {/* Bottom Navigation */}
+                <View style={styles.bottomNav}>
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Profile')}>
+                        <FontAwesome5 name="user" size={24} color="black" />
+                        <Text style={styles.navText}>Profile</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/HelpSupport')}>
-                    <MaterialIcons name="support-agent" size={24} color="black" />
-                    <Text style={styles.navText}>Help/Support</Text>
-                </TouchableOpacity>
-            </View>
-        </SafeAreaView>
-    );
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Notifications')}>
+                        <Ionicons name="notifications-outline" size={24} color="black" />
+                        <Text style={styles.navText}>Notifications</Text>
+                    </TouchableOpacity>
+
+                    {/* Home Button */}
+                    <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/screens/home')}>
+                        <Ionicons name="home" size={30} color="white" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/Settings')}>
+                        <Ionicons name="settings-outline" size={24} color="black" />
+                        <Text style={styles.navText}>Settings</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.navItem} onPress={() => router.push('/screens/HelpSupport')}>
+                        <MaterialIcons name="support-agent" size={24} color="black" />
+                        <Text style={styles.navText}>Help/Support</Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        );
+    }
+    
+    // Default return, should rarely be seen as we navigate away
+    return null;
 }
 
 const styles = StyleSheet.create({
@@ -122,34 +191,37 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 4,
     },
-    title: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginTop: 140,
-        marginBottom: 20,
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    form: {
-        width: '90%',
-    },
-    input: {
-        backgroundColor: '#FFF',
-        borderRadius: 10,
-        padding: 15,
-        marginVertical: 8,
-        borderWidth: 1,
-        borderColor: '#ddd'
-    },
-    payButton: {
-        backgroundColor: '#0A0A50',
-        padding: 15,
-        borderRadius: 10,
+    loadingText: {
         marginTop: 20,
-        alignItems: 'center'
+        fontSize: 16,
+        color: '#0A66C2',
     },
-    payButtonText: {
+    errorContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+    errorText: {
+        marginTop: 20,
+        fontSize: 16,
+        color: 'red',
+        textAlign: 'center',
+    },
+    retryButton: {
+        backgroundColor: '#0A66C2',
+        padding: 12,
+        borderRadius: 8,
+        marginTop: 20,
+    },
+    retryButtonText: {
         color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 16
     },
     bottomNav: {
         position: 'absolute',
